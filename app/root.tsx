@@ -1,3 +1,4 @@
+import {useEffect} from "react";
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -5,7 +6,6 @@ import type { Route } from "./+types/root";
 import {usePuterStore} from "~/lib/puter";
 
 import "./app.css";
-import {useEffect} from "react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },

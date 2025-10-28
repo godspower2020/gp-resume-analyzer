@@ -1,11 +1,14 @@
-import type { Route } from "./+types/home";
+import {useEffect} from "react";
+import {useLocation, useNavigate} from "react-router";
 
 import Navbar from "~/components/Navbar";
-import {resumes} from "../../models";
 import ResumeCard from "~/components/resumeCard";
-import {useLocation, useNavigate} from "react-router";
+
+import type { Route } from "./+types/home";
+
+import {resumes} from "../../models";
+
 import {usePuterStore} from "~/lib/puter";
-import {useEffect} from "react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -25,6 +28,7 @@ export default function Home() {
   return (
       <main className="bg-[url('/images/bg-main.svg')] bg-cover">
         <Navbar />
+
         <section className="main-section">
             <div className="page-heading py-16">
                 <h1>Track Your Applications & Resume Ratings</h1>

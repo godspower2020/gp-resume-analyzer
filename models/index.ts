@@ -224,16 +224,8 @@ export const AIResponseFormat = `
       };
     }`;
 
-export const prepareInstructions = ({
-                                        jobTitle,
-                                        jobDescription,
-                                        AIResponseFormat,
-                                    }: {
-    jobTitle: string;
-    jobDescription: string;
-    AIResponseFormat: string;
-}) =>
-    `You are an expert in ATS (Applicant Tracking System) and resume analysis.
+export const prepareInstructions = ({jobTitle, jobDescription}: { jobTitle: string; jobDescription: string }) =>
+    `You are an expert in ATS(Applicant Tracking System) and resume analysis.
   Please analyze and rate this resume and suggest how to improve it.
   The rating can be low if the resume is bad.
   Be thorough and detailed. Don't be afraid to point out any mistakes or areas for improvement.
