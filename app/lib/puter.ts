@@ -92,6 +92,7 @@ interface PuterStore {
         flush: () => Promise<boolean | undefined>;
     };
 
+    deleteResume: (id: string) => Promise<boolean>;
     init: () => void;
     clearError: () => void;
 }
@@ -390,6 +391,29 @@ export const usePuterStore = create<PuterStore>((set, get) => {
         return puter.kv.delete(key);
     };
 
+    const deleteResume = async (id: string): Promise<boolean> => {
+        const puter = getPuter();
+        if (!puter) {
+            setError("Puter.js not available");
+            return false;
+        }
+
+        try {
+            const dataStr = await puter.kv.get(`resume:${id}`);
+            if (!dataStr) return false;
+
+            const data = JSON.parse(dataStr);
+            if (data.resumePath) await puter.fs.delete(data.resumePath);
+            if (data.imagePath) await puter.fs.delete(data.imagePath);
+
+            await puter.kv.delete(`resume:${id}`);
+            return true;
+        } catch (err) {
+            console.error("Failed to delete resume:", err);
+            return false;
+        }
+    };
+
     const listKV = async (pattern: string, returnValues?: boolean) => {
         const puter = getPuter();
         if (!puter) {
@@ -450,6 +474,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
                 listKV(pattern, returnValues),
             flush: () => flushKV(),
         },
+        deleteResume,
         init,
         clearError: () => set({ error: null }),
     };

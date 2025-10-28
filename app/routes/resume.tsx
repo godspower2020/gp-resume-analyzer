@@ -6,6 +6,7 @@ import Summary from "~/components/resume/Summary";
 import Details from "~/components/resume/Details";
 
 import {usePuterStore} from "~/lib/puter";
+import SpinnerLoading from "~/components/loading/SpinnerLoading";
 
 export const meta = () => ([
     { title: 'Review Resume - GP Resume' },
@@ -18,7 +19,8 @@ const Resume = () => {
     const [feedback, setFeedback] = useState<Feedback | null>(null);
     const [imageUrl, setImageUrl] = useState('');
     const [resumeUrl, setResumeUrl] = useState('');
-    const { auth, isLoading, fs, kv} = usePuterStore()
+    const [isDeleting, setIsDeleting] = useState(false);
+    const { auth, isLoading, fs, kv, deleteResume} = usePuterStore()
 
     useEffect(() => {
         if(!isLoading && !auth.isAuthenticated) navigate(`/auth?next=/resume/${id}`)
@@ -52,13 +54,51 @@ const Resume = () => {
 
         loadResume();
     }, [id])
+
+    const handleDelete = async () => {
+        if (!confirm("Are you sure you want to delete this resume?")) return;
+
+        try {
+            setIsDeleting(true);
+
+            const deleted = await deleteResume(id as string);
+            console.log("deleteResume result:", deleted);
+
+            if (deleted) {
+                alert("Resume deleted successfully.");
+                navigate("/");
+            } else {
+                alert("Failed to delete resume. Please try again.");
+            }
+        } catch (err) {
+            console.error("Error deleting resume:", err);
+            alert("Failed to delete resume. Please try again.");
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
     return (
         <main className="!pt-0">
             <nav className="resume-nav">
                 <Link to="/" className="back-button">
                     <img src="/icons/back.svg" alt="Back logo" className="w-2.5 h-2.5" />
-                    <span className="text-gray-800 text-sm font-semibold">Back to Homepage</span>
+                    <span className="hidden md:flex text-gray-800 text-sm font-semibold">Back to Homepage</span>
                 </Link>
+
+                <button
+                    onClick={handleDelete}
+                    className={`bg-red-500 text-white text-sm px-3 py-2.5 rounded-md hover:bg-red-600 transition cursor-pointer ${
+                        isDeleting ? "opacity-75 cursor-not-allowed" : ""}`}
+                >
+                    {isDeleting ? (
+                        <>
+                            <SpinnerLoading />
+                        </>
+                    ) : (
+                        "Delete Resume"
+                    )}
+                </button>
             </nav>
 
             <div className="flex flex-row w-full max-lg:flex-col-reverse">
