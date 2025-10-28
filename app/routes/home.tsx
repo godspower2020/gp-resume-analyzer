@@ -1,8 +1,8 @@
 import {useEffect} from "react";
 import {useLocation, useNavigate} from "react-router";
 
-import Navbar from "~/components/Navbar";
-import ResumeCard from "~/components/resumeCard";
+import Navbar from "~/components/navbar/Navbar";
+import ResumeCard from "~/components/resume/resumeCard";
 
 import type { Route } from "./+types/home";
 

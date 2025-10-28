@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useLocation, useNavigate} from "react-router";
 
-import SpinnerLoading from "../components/SpinnerLoading";
+import SpinnerLoading from "../components/loading/SpinnerLoading";
 
 import {usePuterStore} from "~/lib/puter";
 

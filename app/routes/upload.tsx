@@ -1,8 +1,8 @@
 import React, {type FormEvent, useState} from 'react'
 import {useNavigate} from "react-router";
 
-import Navbar from "~/components/Navbar";
-import FileUploader from "~/components/FileUploader";
+import Navbar from "~/components/navbar/Navbar";
+import FileUploader from "~/components/resume/FileUploader";
 
 import {usePuterStore} from "~/lib/puter";
 

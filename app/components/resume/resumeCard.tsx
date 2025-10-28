@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from "react-router";
-import ScoreCircle from "~/components/ScoreCircle";
+import ScoreCircle from "~/components/dynamicgauge/ScoreCircle";
 
 const ResumeCard = ({resume}: {resume: Resume}) => {
     return (
